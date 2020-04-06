@@ -10,7 +10,8 @@ endif
 EXTRA_DIST = android-config.h sync-with-kernel.sh bootstrap.sh \
 	doxygen_libdvbv5.cfg include COPYING.libv4l \
 	COPYING.libdvbv5 README.libv4l README.lib-multi-threading \
-	TODO.libdvbv5 doc/libdvbv5-index.doc
+	TODO.libdvbv5 doc meson.build meson_options.txt gen-version.sh \
+	version.h.in libdvbv5-po/meson.build v4l-utils-po/meson.build
 
 include $(top_srcdir)/aminclude.am
 

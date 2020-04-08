@@ -1,0 +1,39 @@
+# Features
+option('jpeg', type : 'feature', value : 'auto')
+option('udev', type : 'feature', value : 'auto')
+
+# Options
+option('bpf', type : 'boolean',
+       description : 'Enable IR BPF decoders')
+option('libdvbv5', type : 'boolean',
+       description : 'Enable libdvbv5 compilation')
+option('qv4l2', type : 'boolean',
+       description : 'Enable qv4l2 compilation')
+option('qvidcap', type : 'boolean',
+       description : 'Enable qvidcap compilation')
+option('v4l-plugins', type : 'boolean',
+       description : 'V4L plugin support')
+option('v4l-utils', type : 'boolean',
+       description : 'Enable v4l-utils compilation')
+option('v4l2-compliance-32', type : 'boolean', value : false,
+       description : 'Enable v4l2-compliance-32 compilation (for debugging purposes only)')
+option('v4l2-compliance-libv4l', type : 'boolean',
+       description : 'Enable use of libv4l in v4l2-compliance')
+option('v4l2-ctl-32', type : 'boolean', value : false,
+       description : 'Enable v4l2-ctl-32 compilation (for debugging purposes only)')
+option('v4l2-ctl-libv4l', type : 'boolean',
+       description : 'Enable use of libv4l in v4l2-ctl')
+option('v4l2-ctl-stream-to', type : 'boolean',
+       description : 'Enable use of --stream-to in v4l2-ctl')
+
+# Directories
+option('libv4l1subdir', type : 'string', value : 'libv4l',
+       description : 'Set libv4l1 library subdir')
+option('libv4l2subdir', type : 'string', value : 'libv4l',
+       description : 'Set libv4l2 library subdir')
+option('libv4lconvertsubdir', type : 'string', value : 'libv4l',
+       description : 'Set libv4lconvert library subdir')
+option('systemdsystemunitdir', type : 'string',
+       description : 'Set systemd system unit directory')
+option('udevdir', type : 'string',
+       description : 'Set udev directory')

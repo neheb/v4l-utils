@@ -1,18 +1,18 @@
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <inttypes.h>
 #include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <sys/ioctl.h>
 #include <sys/sysmacros.h>
 #include <sys/time.h>
 #include <dirent.h>
-#include <math.h>
+#include <cmath>
 #include <linux/media.h>
 
 #include "v4l2-ctl.h"

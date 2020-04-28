@@ -19,19 +19,19 @@
  */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include <inttypes.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/sysmacros.h>
 #include <fcntl.h>
 #include <dirent.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <sys/ioctl.h>
-#include <assert.h>
+#include <cassert>
 #include <set>
 #include <fstream>
 

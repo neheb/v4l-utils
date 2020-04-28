@@ -4,7 +4,7 @@
  */
 
 #include <sys/ioctl.h>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "cec-follower.h"
 #include "compiler.h"

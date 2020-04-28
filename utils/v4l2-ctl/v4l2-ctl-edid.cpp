@@ -1,12 +1,12 @@
 #include <cstring>
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <inttypes.h>
 #include <fcntl.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <sys/ioctl.h>
 
 #include "v4l2-ctl.h"

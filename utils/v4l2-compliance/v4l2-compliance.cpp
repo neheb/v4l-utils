@@ -21,22 +21,22 @@
 #include <cstring>
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <inttypes.h>
 #include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/sysmacros.h>
 #include <dirent.h>
-#include <math.h>
+#include <cmath>
 #include <sys/utsname.h>
-#include <signal.h>
+#include <csignal>
 #include <vector>
 
 #include "v4l2-compliance.h"

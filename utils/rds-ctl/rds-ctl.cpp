@@ -8,21 +8,21 @@
  */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <wchar.h>
-#include <locale.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
+#include <clocale>
 #include <inttypes.h>
 #include <getopt.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <errno.h>
+#include <cerrno>
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <dirent.h>
 #include <config.h>
-#include <signal.h>
+#include <csignal>
 
 #include <linux/videodev2.h>
 #include <libv4l2rds.h>

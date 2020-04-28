@@ -1,8 +1,8 @@
 #include <cstring>
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <inttypes.h>
 #include <getopt.h>
 #include <sys/types.h>
@@ -11,13 +11,13 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <fcntl.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/mman.h>
 #include <dirent.h>
-#include <math.h>
+#include <cmath>
 #include <linux/media.h>
 
 #include "compiler.h"

@@ -19,9 +19,9 @@
  */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include <inttypes.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,8 +29,8 @@
 #include <sys/wait.h>
 #include <sys/epoll.h>
 #include <fcntl.h>
-#include <ctype.h>
-#include <errno.h>
+#include <cctype>
+#include <cerrno>
 #include <poll.h>
 #include <sys/ioctl.h>
 #include <netinet/in.h>

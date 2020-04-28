@@ -5,7 +5,7 @@
  * Copyright 2017 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
  */
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <unistd.h>
 #include <fcntl.h>

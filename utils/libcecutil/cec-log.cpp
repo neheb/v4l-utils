@@ -4,11 +4,11 @@
  */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include <inttypes.h>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <linux/cec-funcs.h>
 #include "cec-htng-funcs.h"

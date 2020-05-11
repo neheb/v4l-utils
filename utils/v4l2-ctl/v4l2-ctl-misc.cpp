@@ -212,11 +212,11 @@ void misc_cmd(int ch, char *optarg)
 				jpegcomp.quality = strtol(value, 0L, 0);
 				break;
 			case 17:
-				if (strstr(value, "dht"))
+				if (std::strstr(value, "dht"))
 					jpegcomp.jpeg_markers |= V4L2_JPEG_MARKER_DHT;
-				if (strstr(value, "dqt"))
+				if (std::strstr(value, "dqt"))
 					jpegcomp.jpeg_markers |= V4L2_JPEG_MARKER_DQT;
-				if (strstr(value, "dri"))
+				if (std::strstr(value, "dri"))
 					jpegcomp.jpeg_markers |= V4L2_JPEG_MARKER_DRI;
 				break;
 			case 18:

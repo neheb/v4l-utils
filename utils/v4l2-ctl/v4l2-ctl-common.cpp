@@ -1190,13 +1190,13 @@ void common_get(cv4l_fd &_fd)
 				char *q;
 
 				buf[len] = 0;
-				while ((q = strstr(p, "START STATUS"))) {
+				while ((q = std::strstr(p, "START STATUS"))) {
 					p = q + 1;
 				}
 				if (p) {
 					while (p > buf && *p != '<') p--;
 					q = p;
-					while ((q = strstr(q, "<6>"))) {
+					while ((q = std::strstr(q, "<6>"))) {
 						memcpy(q, "   ", 3);
 					}
 					printf("%s", p);

@@ -1,5 +1,5 @@
 if host_machine.system() == 'linux'
-    subdir('test')
+#    subdir('test')
     subdir('xc3028-firmware')
     if have_i2c_dev
         subdir('rds-saa6588')

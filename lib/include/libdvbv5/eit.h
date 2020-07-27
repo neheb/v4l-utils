@@ -197,7 +197,7 @@ ssize_t dvb_table_eit_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_eit to be freed
  */
-void dvb_table_eit_free(struct dvb_table_eit *table);
+void dvb_table_eit_free(struct dvb_table_eit *eit);
 
 /**
  * @brief Prints the content of the DVB EIT table
@@ -207,7 +207,7 @@ void dvb_table_eit_free(struct dvb_table_eit *table);
  * @param table pointer to struct dvb_table_eit
  */
 void dvb_table_eit_print(struct dvb_v5_fe_parms *parms,
-			 struct dvb_table_eit *table);
+			 struct dvb_table_eit *eit);
 
 /**
  * @brief Converts a DVB EIT formatted timestamp into struct tm

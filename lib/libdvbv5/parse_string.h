@@ -27,7 +27,7 @@ void dvb_iconv_to_charset(struct dvb_v5_fe_parms *parms,
 			  size_t destlen,
 			  const unsigned char *src,
 			  size_t len,
-			  char *type, char *output_charset);
+			  char *input_charset, char *output_charset);
 
 void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 		      const unsigned char *src, size_t len);

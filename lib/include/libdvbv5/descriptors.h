@@ -157,7 +157,7 @@ uint32_t dvb_bcd(uint32_t bcd);
  * @param len		Number of bytes to show
  */
 void dvb_hexdump(struct dvb_v5_fe_parms *parms, const char *prefix,
-		 const unsigned char *buf, int len);
+		 const unsigned char *data, int len);
 
 /**
  * @brief parse MPEG-TS descriptors

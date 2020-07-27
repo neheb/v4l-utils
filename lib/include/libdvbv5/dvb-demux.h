@@ -148,7 +148,7 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
  *
  * @warning This function currently assumes that the PAT fits into one session.
  */
-int dvb_get_pmt_pid(int dmxfd, int sid);
+int dvb_get_pmt_pid(int patfd, int sid);
 
 #ifdef __cplusplus
 }

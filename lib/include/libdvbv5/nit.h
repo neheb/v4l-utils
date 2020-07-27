@@ -221,7 +221,7 @@ ssize_t dvb_table_nit_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_nit to be freed
  */
-void dvb_table_nit_free(struct dvb_table_nit *table);
+void dvb_table_nit_free(struct dvb_table_nit *nit);
 
 /**
  * @brief Prints the content of the NIT table
@@ -230,7 +230,7 @@ void dvb_table_nit_free(struct dvb_table_nit *table);
  * @param parms	struct dvb_v5_fe_parms pointer to the opened device
  * @param table	pointer to struct dvb_table_nit
  */
-void dvb_table_nit_print(struct dvb_v5_fe_parms *parms, struct dvb_table_nit *table);
+void dvb_table_nit_print(struct dvb_v5_fe_parms *parms, struct dvb_table_nit *nit);
 
 /**
  * @brief For each entry at NIT and NIT transport tables, call a callback
@@ -263,7 +263,7 @@ void dvb_table_nit_print(struct dvb_v5_fe_parms *parms, struct dvb_table_nit *ta
  */
 void dvb_table_nit_descriptor_handler(
 			    struct dvb_v5_fe_parms *parms,
-			    struct dvb_table_nit *table,
+			    struct dvb_table_nit *nit,
 			    enum descriptors descriptor,
 			    nit_handler_callback_t *call_nit,
 			    nit_tran_handler_callback_t *call_tran,

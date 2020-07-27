@@ -117,43 +117,43 @@ int v4lconvert_oom_error(struct v4lconvert_data *data);
 void v4lconvert_rgb24_to_yuv420(const unsigned char *src, unsigned char *dest,
 		const struct v4l2_format *src_fmt, int bgr, int yvu, int bpp);
 
-void v4lconvert_yuv420_to_rgb24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yuv420_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int yvu);
 
-void v4lconvert_yuv420_to_bgr24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yuv420_to_bgr24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int yvu);
 
-void v4lconvert_yuyv_to_rgb24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yuyv_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_yuyv_to_bgr24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yuyv_to_bgr24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_yuyv_to_yuv420(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yuyv_to_yuv420(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride, int yvu);
 
 void v4lconvert_nv16_to_yuyv(const unsigned char *src, unsigned char *dest,
 		int width, int height);
 
-void v4lconvert_yvyu_to_rgb24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yvyu_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_yvyu_to_bgr24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_yvyu_to_bgr24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_uyvy_to_rgb24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_uyvy_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_uyvy_to_bgr24(const unsigned char *src, unsigned char *dst,
+void v4lconvert_uyvy_to_bgr24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride);
 
-void v4lconvert_uyvy_to_yuv420(const unsigned char *src, unsigned char *dst,
+void v4lconvert_uyvy_to_yuv420(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride, int yvu);
 
 void v4lconvert_swap_rgb(const unsigned char *src, unsigned char *dst,
 		int width, int height);
 
-void v4lconvert_swap_uv(const unsigned char *src, unsigned char *dst,
+void v4lconvert_swap_uv(const unsigned char *src, unsigned char *dest,
 		const struct v4l2_format *src_fmt);
 
 void v4lconvert_grey_to_rgb24(const unsigned char *src, unsigned char *dest,
@@ -209,9 +209,9 @@ void v4lconvert_m420_to_yuv420(const unsigned char *src,
 
 int v4lconvert_cpia1_to_yuv420(struct v4lconvert_data *data,
 		const unsigned char *src, int src_size,
-		unsigned char *dst, int width, int height, int yvu);
+		unsigned char *dest, int width, int height, int yvu);
 
-void v4lconvert_sn9c20x_to_yuv420(const unsigned char *src, unsigned char *dst,
+void v4lconvert_sn9c20x_to_yuv420(const unsigned char *raw, unsigned char *i420,
 		int width, int height, int yvu);
 
 int v4lconvert_se401_to_rgb24(struct v4lconvert_data *data,
@@ -226,13 +226,13 @@ int v4lconvert_decode_jpeg_libjpeg(struct v4lconvert_data *data,
 	unsigned char *src, int src_size, unsigned char *dest,
 	struct v4l2_format *fmt, unsigned int dest_pix_fmt);
 
-int v4lconvert_decode_jpgl(const unsigned char *src, int src_size,
-	unsigned int dest_pix_fmt, unsigned char *dest, int width, int height);
+int v4lconvert_decode_jpgl(const unsigned char *inp, int src_size,
+	unsigned int dest_pix_fmt, unsigned char *fb, int width, int height);
 
-void v4lconvert_decode_spca561(const unsigned char *src, unsigned char *dst,
+void v4lconvert_decode_spca561(const unsigned char *inbuf, unsigned char *outbuf,
 		int width, int height);
 
-void v4lconvert_decode_sn9c10x(const unsigned char *src, unsigned char *dst,
+void v4lconvert_decode_sn9c10x(const unsigned char *inp, unsigned char *outp,
 		int width, int height);
 
 int v4lconvert_decode_pac207(struct v4lconvert_data *data,
@@ -240,7 +240,7 @@ int v4lconvert_decode_pac207(struct v4lconvert_data *data,
 		int width, int height);
 
 int v4lconvert_decode_mr97310a(struct v4lconvert_data *data,
-		const unsigned char *src, int src_size, unsigned char *dst,
+		const unsigned char *inp, int src_size, unsigned char *outp,
 		int width, int height);
 
 int v4lconvert_decode_jl2005bcd(struct v4lconvert_data *data,
@@ -257,10 +257,10 @@ void v4lconvert_decode_stv0680(const unsigned char *src, unsigned char *dst,
 		int width, int height);
 
 void v4lconvert_bayer_to_rgb24(const unsigned char *bayer,
-		unsigned char *rgb, int width, int height, const unsigned int stride, unsigned int pixfmt);
+		unsigned char *bgr, int width, int height, const unsigned int stride, unsigned int pixfmt);
 
 void v4lconvert_bayer_to_bgr24(const unsigned char *bayer,
-		unsigned char *rgb, int width, int height, const unsigned int stride, unsigned int pixfmt);
+		unsigned char *bgr, int width, int height, const unsigned int stride, unsigned int pixfmt);
 
 void v4lconvert_bayer_to_yuv420(const unsigned char *bayer, unsigned char *yuv,
 		int width, int height, const unsigned int stride, unsigned int src_pixfmt, int yvu);
@@ -275,13 +275,13 @@ void v4lconvert_bayer16_to_bayer8(unsigned char *bayer16,
 		unsigned char *bayer8, int width, int height);
 
 void v4lconvert_hm12_to_rgb24(const unsigned char *src,
-		unsigned char *dst, int width, int height);
+		unsigned char *dest, int width, int height);
 
 void v4lconvert_hm12_to_bgr24(const unsigned char *src,
-		unsigned char *dst, int width, int height);
+		unsigned char *dest, int width, int height);
 
 void v4lconvert_hm12_to_yuv420(const unsigned char *src,
-		unsigned char *dst, int width, int height, int yvu);
+		unsigned char *dest, int width, int height, int yvu);
 
 void v4lconvert_hsv_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int bgr, int Xin, unsigned char hsv_enc);
@@ -303,7 +303,7 @@ void v4lconvert_crop(unsigned char *src, unsigned char *dest,
 
 int v4lconvert_helper_decompress(struct v4lconvert_data *data,
 		const char *helper, const unsigned char *src, int src_size,
-		unsigned char *dest, int dest_size, int width, int height, int command);
+		unsigned char *dest, int dest_size, int width, int height, int flags);
 
 void v4lconvert_helper_cleanup(struct v4lconvert_data *data);
 

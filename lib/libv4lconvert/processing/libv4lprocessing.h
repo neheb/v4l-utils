@@ -31,7 +31,7 @@
 struct v4lprocessing_data;
 struct v4lcontrol_data;
 
-struct v4lprocessing_data *v4lprocessing_create(int fd, struct v4lcontrol_data *data);
+struct v4lprocessing_data *v4lprocessing_create(int fd, struct v4lcontrol_data *control);
 void v4lprocessing_destroy(struct v4lprocessing_data *data);
 
 /* Prepare to process 1 frame, returns 1 if processing is necesary,

@@ -281,7 +281,7 @@ ssize_t dvb_table_pmt_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_pmt to be freed
  */
-void dvb_table_pmt_free(struct dvb_table_pmt *table);
+void dvb_table_pmt_free(struct dvb_table_pmt *pmt);
 
 /**
  * @brief Prints the content of the PAT table
@@ -291,7 +291,7 @@ void dvb_table_pmt_free(struct dvb_table_pmt *table);
  * @param table pointer to struct dvb_table_pmt
  */
 void dvb_table_pmt_print(struct dvb_v5_fe_parms *parms,
-			 const struct dvb_table_pmt *table);
+			 const struct dvb_table_pmt *pmt);
 
 #ifdef __cplusplus
 }

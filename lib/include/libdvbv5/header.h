@@ -132,7 +132,7 @@ extern "C" {
  *
  * @param header pointer to struct dvb_table_header to be parsed
  */
-void dvb_table_header_init (struct dvb_table_header *header);
+void dvb_table_header_init (struct dvb_table_header *t);
 /**
  * @brief Prints the content of the MPEG-TS table header
  * @ingroup dvb_table
@@ -141,7 +141,7 @@ void dvb_table_header_init (struct dvb_table_header *header);
  * @param header pointer to struct dvb_table_header to be printed
  */
 void dvb_table_header_print(struct dvb_v5_fe_parms *parms,
-			    const struct dvb_table_header *header);
+			    const struct dvb_table_header *t);
 
 #ifdef __cplusplus
 }

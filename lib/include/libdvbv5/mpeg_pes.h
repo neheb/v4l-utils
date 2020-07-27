@@ -228,7 +228,7 @@ ssize_t dvb_mpeg_pes_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssi
  * If the pointer pes was allocated dynamically, this function
  * can be used to free the memory.
  */
-void dvb_mpeg_pes_free(struct dvb_mpeg_pes *pes);
+void dvb_mpeg_pes_free(struct dvb_mpeg_pes *ts);
 
 /**
  * @brief Print details of struct dvb_mpeg_pes

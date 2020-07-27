@@ -192,7 +192,7 @@ ssize_t atsc_table_eit_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct atsc_table_eit to be freed
  */
-void atsc_table_eit_free(struct atsc_table_eit *table);
+void atsc_table_eit_free(struct atsc_table_eit *eit);
 
 /**
  * @brief Prints the content of the ATSC EIT table
@@ -202,7 +202,7 @@ void atsc_table_eit_free(struct atsc_table_eit *table);
  * @param table pointer to struct atsc_table_eit
  */
 void atsc_table_eit_print(struct dvb_v5_fe_parms *parms,
-			  struct atsc_table_eit *table);
+			  struct atsc_table_eit *eit);
 
 /**
  * @brief Converts an ATSC EIT formatted timestamp into struct tm

@@ -168,7 +168,7 @@ ssize_t atsc_table_mgt_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct atsc_table_mgt to be freed
  */
-void atsc_table_mgt_free(struct atsc_table_mgt *table);
+void atsc_table_mgt_free(struct atsc_table_mgt *mgt);
 
 /**
  * @brief Prints the content of the MGT table
@@ -178,7 +178,7 @@ void atsc_table_mgt_free(struct atsc_table_mgt *table);
  * @param table pointer to struct atsc_table_mgt
  */
 void atsc_table_mgt_print(struct dvb_v5_fe_parms *parms,
-			  struct atsc_table_mgt *table);
+			  struct atsc_table_mgt *mgt);
 
 #ifdef __cplusplus
 }

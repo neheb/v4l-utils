@@ -423,8 +423,8 @@ int dvb_retrieve_entry_prop(struct dvb_entry *entry,
  * @return Returns 0 if success, or, -1 if error.
  */
 int dvb_store_channel(struct dvb_file **dvb_file,
-		      struct dvb_v5_fe_parms *parms,
-		      struct dvb_v5_descriptors *dvb_desc,
+		      struct dvb_v5_fe_parms *__p,
+		      struct dvb_v5_descriptors *dvb_scan_handler,
 		      int get_detected, int get_nit);
 
 /**

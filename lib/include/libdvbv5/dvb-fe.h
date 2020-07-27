@@ -732,7 +732,7 @@ int dvb_fe_is_satellite(uint32_t delivery_system);
  * "COUNTRY" property in dvb_fe_set_parm() overrides the setting.
  */
 int dvb_fe_set_default_country(struct dvb_v5_fe_parms *parms,
-			       const char *country);
+			       const char *cc);
 
 #ifdef __cplusplus
 }

@@ -222,7 +222,7 @@ int dvb_read_section(struct dvb_v5_fe_parms *parms, int dmx_fd,
  * This is a variant of dvb_read_section() that uses a struct dvb_table_filter
  * to specify the filter to use.
  */
-int dvb_read_sections(struct dvb_v5_fe_parms *parms, int dmx_fd,
+int dvb_read_sections(struct dvb_v5_fe_parms *__p, int dmx_fd,
 			     struct dvb_table_filter *sect,
 			     unsigned timeout);
 
@@ -265,7 +265,7 @@ void dvb_scan_free_handler_table(struct dvb_v5_descriptors *dvb_scan_handler);
  * On sucess, it returns a pointer to a struct dvb_v5_descriptors, that can
  * either be used to tune into a service or to be stored inside a file.
  */
-struct dvb_v5_descriptors *dvb_get_ts_tables(struct dvb_v5_fe_parms *parms, int dmx_fd,
+struct dvb_v5_descriptors *dvb_get_ts_tables(struct dvb_v5_fe_parms *__p, int dmx_fd,
 					  uint32_t delivery_system,
 					  unsigned other_nit,
 					  unsigned timeout_multiply);
@@ -337,7 +337,7 @@ typedef int (check_frontend_t)(void *args, struct dvb_v5_fe_parms *parms);
  * }
  * @endcode
  */
-struct dvb_v5_descriptors *dvb_scan_transponder(struct dvb_v5_fe_parms *parms,
+struct dvb_v5_descriptors *dvb_scan_transponder(struct dvb_v5_fe_parms *__p,
 						struct dvb_entry *entry,
 						int dmx_fd,
 						check_frontend_t *check_frontend,
@@ -388,7 +388,7 @@ struct dvb_v5_descriptors *dvb_scan_transponder(struct dvb_v5_fe_parms *parms,
  * }
  * @endcode
  */
-void dvb_add_scaned_transponders(struct dvb_v5_fe_parms *parms,
+void dvb_add_scaned_transponders(struct dvb_v5_fe_parms *__p,
 				 struct dvb_v5_descriptors *dvb_scan_handler,
 				 struct dvb_entry *first_entry,
 				 struct dvb_entry *entry);
@@ -398,12 +398,12 @@ void dvb_add_scaned_transponders(struct dvb_v5_fe_parms *parms,
  * Some ancillary functions used internally inside the library, used to
  * identify duplicated transport streams and add new found transponder entries
  */
-int dvb_estimate_freq_shift(struct dvb_v5_fe_parms *parms);
+int dvb_estimate_freq_shift(struct dvb_v5_fe_parms *__p);
 
 int dvb_new_freq_is_needed(struct dvb_entry *entry, struct dvb_entry *last_entry,
 			   uint32_t freq, enum dvb_sat_polarization pol, int shift);
 
-struct dvb_entry *dvb_scan_add_entry(struct dvb_v5_fe_parms *parms,
+struct dvb_entry *dvb_scan_add_entry(struct dvb_v5_fe_parms *__p,
 				     struct dvb_entry *first_entry,
 			             struct dvb_entry *entry,
 			             uint32_t freq, uint32_t shift,
@@ -414,14 +414,14 @@ int dvb_new_entry_is_needed(struct dvb_entry *entry,
 			    uint32_t freq, int shift,
 			    enum dvb_sat_polarization pol, uint32_t stream_id);
 
-struct dvb_entry *dvb_scan_add_entry_ex(struct dvb_v5_fe_parms *parms,
+struct dvb_entry *dvb_scan_add_entry_ex(struct dvb_v5_fe_parms *__p,
 					struct dvb_entry *first_entry,
 					struct dvb_entry *entry,
 					uint32_t freq, uint32_t shift,
 					enum dvb_sat_polarization pol,
 					uint32_t stream_id);
 
-void dvb_update_transponders(struct dvb_v5_fe_parms *parms,
+void dvb_update_transponders(struct dvb_v5_fe_parms *__p,
 			     struct dvb_v5_descriptors *dvb_scan_handler,
 			     struct dvb_entry *first_entry,
 			     struct dvb_entry *entry);

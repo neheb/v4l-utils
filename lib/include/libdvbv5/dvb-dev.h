@@ -398,7 +398,7 @@ int dvb_dev_set_bufsize(struct dvb_open_descriptor *open_dev,
  */
 int dvb_dev_dmx_set_pesfilter(struct dvb_open_descriptor *open_dev,
 			      int pid, dmx_pes_type_t type,
-			      dmx_output_t output, int buffersize);
+			      dmx_output_t output, int bufsize);
 
 /**
  * @brief Sets a MPEG-TS section filter

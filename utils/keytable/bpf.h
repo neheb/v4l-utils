@@ -89,10 +89,10 @@ int bpf_map_delete_elem(int fd, const void *key);
 int bpf_map_get_next_key(int fd, const void *key, void *next_key);
 int bpf_obj_pin(int fd, const char *pathname);
 int bpf_obj_get(const char *pathname);
-int bpf_prog_attach(int prog_fd, int attachable_fd, enum bpf_attach_type type,
+int bpf_prog_attach(int prog_fd, int target_fd, enum bpf_attach_type type,
 		    unsigned int flags);
-int bpf_prog_detach(int attachable_fd, enum bpf_attach_type type);
-int bpf_prog_detach2(int prog_fd, int attachable_fd, enum bpf_attach_type type);
+int bpf_prog_detach(int target_fd, enum bpf_attach_type type);
+int bpf_prog_detach2(int prog_fd, int target_fd, enum bpf_attach_type type);
 int bpf_prog_test_run(int prog_fd, int repeat, void *data, __u32 size,
 		      void *data_out, __u32 *size_out, __u32 *retval,
 		      __u32 *duration);

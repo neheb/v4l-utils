@@ -233,7 +233,7 @@ ssize_t atsc_table_vct_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct atsc_table_vct to be freed
  */
-void atsc_table_vct_free(struct atsc_table_vct *table);
+void atsc_table_vct_free(struct atsc_table_vct *vct);
 /**
  * @brief Prints the content of the VCT table
  * @ingroup dvb_table
@@ -242,7 +242,7 @@ void atsc_table_vct_free(struct atsc_table_vct *table);
  * @param table pointer to struct atsc_table_vct
  */
 void atsc_table_vct_print(struct dvb_v5_fe_parms *parms,
-			  struct atsc_table_vct *table);
+			  struct atsc_table_vct *vct);
 
 #ifdef __cplusplus
 }

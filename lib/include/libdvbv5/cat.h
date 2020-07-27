@@ -88,7 +88,7 @@ ssize_t dvb_table_cat_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_cat to be freed
  */
-void dvb_table_cat_free(struct dvb_table_cat *table);
+void dvb_table_cat_free(struct dvb_table_cat *cat);
 
 /**
  * @brief Prints the content of the CAT table
@@ -97,7 +97,7 @@ void dvb_table_cat_free(struct dvb_table_cat *table);
  * @param table pointer to struct dvb_table_cat
  */
 void dvb_table_cat_print(struct dvb_v5_fe_parms *parms,
-			 struct dvb_table_cat *table);
+			 struct dvb_table_cat *cat);
 
 #ifdef __cplusplus
 }

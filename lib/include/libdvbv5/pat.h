@@ -153,7 +153,7 @@ ssize_t dvb_table_pat_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_pat to be freed
  */
-void dvb_table_pat_free(struct dvb_table_pat *table);
+void dvb_table_pat_free(struct dvb_table_pat *pat);
 
 /**
  * @brief Prints the content of the PAT table
@@ -163,7 +163,7 @@ void dvb_table_pat_free(struct dvb_table_pat *table);
  * @param table pointer to struct dvb_table_pat
  */
 void dvb_table_pat_print(struct dvb_v5_fe_parms *parms,
-			 struct dvb_table_pat *table);
+			 struct dvb_table_pat *pat);
 
 #ifdef __cplusplus
 }

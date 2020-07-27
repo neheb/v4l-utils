@@ -100,12 +100,12 @@ static const struct cec_arg arg_rec_src_type = {
 };
 
 static void log_digital(const char *arg_name, const struct cec_op_digital_service_id *digital);
-static void log_rec_src(const char *arg_name, const struct cec_op_record_src *rec_src);
-static void log_tuner_dev_info(const char *arg_name, const struct cec_op_tuner_device_info *tuner_dev_info);
-static void log_features(const struct cec_arg *arg, const char *arg_name, const __u8 *p);
-static void log_ui_command(const char *arg_name, const struct cec_op_ui_command *ui_cmd);
-static void log_descriptors(const char *arg_name, unsigned num, const __u32 *descriptors);
-static void log_u8_array(const char *arg_name, unsigned num, const __u8 *vals);
+static void log_rec_src(const char *arg_string, const struct cec_op_record_src *rec_src);
+static void log_tuner_dev_info(const char *arg_string, const struct cec_op_tuner_device_info *tuner_dev_info);
+static void log_features(const struct cec_arg *arg, const char *arg_string, const __u8 *p);
+static void log_ui_command(const char *arg_string, const struct cec_op_ui_command *ui_cmd);
+static void log_descriptors(const char *arg_string, unsigned num, const __u32 *descriptors);
+static void log_u8_array(const char *arg_string, unsigned num, const __u8 *vals);
 static void log_unknown_msg(const struct cec_msg *msg);
 static void log_htng_unknown_msg(const struct cec_msg *msg);
 

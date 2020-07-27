@@ -169,7 +169,7 @@ ssize_t dvb_table_sdt_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf,
  *
  * @param table pointer to struct dvb_table_sdt to be freed
  */
-void dvb_table_sdt_free(struct dvb_table_sdt *table);
+void dvb_table_sdt_free(struct dvb_table_sdt *sdt);
 
 /**
  * @brief Prints the content of the SDT table
@@ -178,7 +178,7 @@ void dvb_table_sdt_free(struct dvb_table_sdt *table);
  * @param parms	struct dvb_v5_fe_parms pointer to the opened device
  * @param table pointer to struct dvb_table_sdt
  */
-void dvb_table_sdt_print(struct dvb_v5_fe_parms *parms, struct dvb_table_sdt *table);
+void dvb_table_sdt_print(struct dvb_v5_fe_parms *parms, struct dvb_table_sdt *sdt);
 
 #ifdef __cplusplus
 }

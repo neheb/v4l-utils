@@ -64,7 +64,7 @@ LIBV4L_PUBLIC int v4l2_open(const char *file, int oflag, ...);
 LIBV4L_PUBLIC int v4l2_close(int fd);
 LIBV4L_PUBLIC int v4l2_dup(int fd);
 LIBV4L_PUBLIC int v4l2_ioctl(int fd, unsigned long int request, ...);
-LIBV4L_PUBLIC ssize_t v4l2_read(int fd, void *buffer, size_t n);
+LIBV4L_PUBLIC ssize_t v4l2_read(int fd, void *dest, size_t n);
 LIBV4L_PUBLIC ssize_t v4l2_write(int fd, const void *buffer, size_t n);
 LIBV4L_PUBLIC void *v4l2_mmap(void *start, size_t length, int prot, int flags,
 		int fd, int64_t offset);

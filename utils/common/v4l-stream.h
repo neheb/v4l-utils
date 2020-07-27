@@ -144,8 +144,8 @@ struct codec_ctx {
 	u32			comp_max_size;
 };
 
-unsigned rle_compress(__u8 *buf, unsigned size, unsigned bytesperline);
-void rle_decompress(__u8 *buf, unsigned size, unsigned rle_size, unsigned bytesperline);
+unsigned rle_compress(__u8 *buf, unsigned size, unsigned bpl);
+void rle_decompress(__u8 *buf, unsigned size, unsigned rle_size, unsigned bpl);
 struct codec_ctx *fwht_alloc(unsigned pixfmt, unsigned visible_width, unsigned visible_height,
 			     unsigned coded_width, unsigned coded_height, unsigned field,
 			     unsigned colorspace, unsigned xfer_func, unsigned ycbcr_enc,

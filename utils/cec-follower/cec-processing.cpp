@@ -3,6 +3,7 @@
  * Copyright 2016 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
  */
 
+#include <array>
 #include <cerrno>
 #include <ctime>
 #include <string>
@@ -831,8 +832,7 @@ static void processMsg(struct node *node, struct cec_msg &msg, unsigned me)
 static void poll_remote_devs(struct node *node, unsigned me)
 {
 	node->remote_la_mask = 0;
-	for (unsigned short & i : node->remote_phys_addr)
-		i = CEC_PHYS_ADDR_INVALID;
+	std::fill(node->remote_phys_addr.begin(), node->remote_phys_addr.end(), CEC_PHYS_ADDR_INVALID);
 
 	if (!(node->caps & CEC_CAP_TRANSMIT))
 		return;

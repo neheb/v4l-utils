@@ -63,7 +63,7 @@ struct node {
 	unsigned available_log_addrs;
 	unsigned adap_la_mask;
 	unsigned remote_la_mask;
-	__u16 remote_phys_addr[15];
+	std::array<__u16, 15> remote_phys_addr;
 	struct state state;
 	__u16 phys_addr;
 	__u8 cec_version;

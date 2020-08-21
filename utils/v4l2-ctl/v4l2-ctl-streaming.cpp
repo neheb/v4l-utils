@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <array>
 #include <cstring>
 
 #include <netdb.h>
@@ -79,7 +81,7 @@ struct request_fwht {
 	struct v4l2_ctrl_fwht_params params;
 };
 
-static request_fwht fwht_reqs[VIDEO_MAX_FRAME];
+static std::array<request_fwht, VIDEO_MAX_FRAME> fwht_reqs;
 
 #define TS_WINDOW 241
 #define FILE_HDR_ID			v4l2_fourcc('V', 'h', 'd', 'r')
@@ -863,13 +865,15 @@ static bool set_fwht_req_by_fd(const struct fwht_cframe_hdr *hdr,
 
 	set_fwht_stateless_params(fwht_params, hdr, last_bf_ts);
 
-	for (auto &fwht_req : fwht_reqs) {
-		if (fwht_req.fd == req_fd) {
-			fwht_req.ts = ts;
-			fwht_req.params = fwht_params;
-			return true;
-		}
+	auto it = std::find_if(fwht_reqs.begin(), fwht_reqs.end(), [=](struct request_fwht fwht_req){
+		return fwht_req.fd == req_fd;});
+
+	if (it != fwht_reqs.end()) {
+		it->ts = ts;
+		it->params = fwht_params;
+		return true;
 	}
+
 	return false;
 }
 

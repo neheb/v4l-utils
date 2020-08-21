@@ -115,7 +115,7 @@ void common_usage()
 	       );
 }
 
-static const char *prefixes[] = {
+static std::array<const char *, 8> prefixes = {
 	"video",
 	"radio",
 	"vbi",
@@ -128,32 +128,25 @@ static const char *prefixes[] = {
 
 static bool is_v4l_dev(const char *name)
 {
-	for (unsigned i = 0; prefixes[i]; i++) {
-		unsigned l = strlen(prefixes[i]);
-
-		if (!memcmp(name, prefixes[i], l)) {
-			if (isdigit(name[l]))
-				return true;
-		}
-	}
-	return false;
+	return std::any_of(prefixes.begin(), prefixes.end(), [=](const char *prefix)
+		{ return !memcmp(name, prefix, strlen(prefix)) &&
+			 isdigit(name[strlen(prefix)]); });
 }
 
 static int calc_node_val(const char *s)
 {
-	int n = 0;
-
 	s = std::strrchr(s, '/') + 1;
 
-	for (unsigned i = 0; prefixes[i]; i++) {
-		unsigned l = strlen(prefixes[i]);
+	auto it = std::find_if(prefixes.begin(), prefixes.end(), [=](const char *prefix)
+		{ return !memcmp(s, prefix, strlen(prefix)); });
 
-		if (!memcmp(s, prefixes[i], l)) {
-			n = i << 8;
-			n += atol(s + l);
-			return n;
-		}
+	if (it != prefixes.end()) {
+		int n;
+		n = std::distance(prefixes.begin(), prefixes.end()) << 8;
+		n += atol(s + strlen(*it));
+		return n;
 	}
+
 	return 0;
 }
 

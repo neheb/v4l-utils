@@ -5,6 +5,8 @@
  * Copyright 2017 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
  */
 
+#include <algorithm>
+#include <array>
 #include <cctype>
 #include <string>
 
@@ -20,26 +22,23 @@
 
 const char *cec_opcode2s(unsigned opcode)
 {
-	for (auto i : msgtable)
-		if (i.opcode == opcode)
-			return i.name;
-	return NULL;
+	auto it = std::find_if(msgtable.begin(), msgtable.end(), [=](struct msgtable msg)
+		{ return msg.opcode == opcode; });
+	return it != msgtable.end() ? it->name : nullptr;
 }
 
 const char *cec_cdc_opcode2s(unsigned cdc_opcode)
 {
-	for (auto i : cdcmsgtable)
-		if (i.opcode == cdc_opcode)
-			return i.name;
-	return NULL;
+	auto it = std::find_if(cdcmsgtable.begin(), cdcmsgtable.end(), [=](struct msgtable cdc)
+		{ return cdc.opcode == cdc_opcode; });
+	return it != cdcmsgtable.end() ? it->name : nullptr;
 }
 
 const char *cec_htng_opcode2s(unsigned htng_opcode)
 {
-	for (auto i : htngmsgtable)
-		if (i.opcode == htng_opcode)
-			return i.name;
-	return NULL;
+	auto it = std::find_if(htngmsgtable.begin(), htngmsgtable.end(), [=](struct msgtable htng)
+		{ return htng.opcode == htng_opcode; });
+	return it != htngmsgtable.end() ? it->name : nullptr;
 }
 
 static std::string caps2s(unsigned caps)

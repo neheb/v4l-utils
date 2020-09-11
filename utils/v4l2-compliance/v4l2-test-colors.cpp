@@ -471,7 +471,7 @@ static const char * const colors[] = {
 	"blue"
 };
 
-static int testColorsFmt(struct node *node, unsigned component,
+static auto testColorsFmt(struct node *node, unsigned component,
 		unsigned skip, unsigned perc)
 {
 	cv4l_queue q;

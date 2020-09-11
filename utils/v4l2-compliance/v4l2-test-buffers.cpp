@@ -72,7 +72,7 @@ static struct buf_seq last_seq, last_m2m_seq;
 
 static int buf_req_fds[VIDEO_MAX_FRAME * 2];
 
-static inline int named_ioctl_fd(int fd, bool trace, const char *cmd_name, unsigned long cmd, void *arg)
+static inline auto named_ioctl_fd(int fd, bool trace, const char *cmd_name, unsigned long cmd, void *arg)
 {
 	int retval;
 	int e;
@@ -126,7 +126,7 @@ static void stream_reset()
 		lseek(stream_from_fd, 0, SEEK_SET);
 }
 
-static bool fill_output_buffer(const cv4l_queue &q, cv4l_buffer &buf, bool first_run = true)
+static auto fill_output_buffer(const cv4l_queue &q, cv4l_buffer &buf, bool first_run = true)
 {
 	bool seek = false;
 
@@ -467,7 +467,7 @@ int buffer::check(unsigned type, unsigned memory, unsigned index,
 	return 0;
 }
 
-static int testQueryBuf(struct node *node, unsigned type, unsigned count)
+static auto testQueryBuf(struct node *node, unsigned type, unsigned count)
 {
 	buffer buf(type);
 	unsigned i;
@@ -484,7 +484,7 @@ static int testQueryBuf(struct node *node, unsigned type, unsigned count)
 	return 0;
 }
 
-static int testSetupVbi(struct node *node, int type)
+static auto testSetupVbi(struct node *node, int type)
 {
 	if (!v4l_type_is_vbi(type))
 		return 0;
@@ -500,7 +500,7 @@ static int testSetupVbi(struct node *node, int type)
 	return 0;
 }
 
-static int testCanSetSameTimings(struct node *node)
+static auto testCanSetSameTimings(struct node *node)
 {
 	if (node->cur_io_caps & V4L2_IN_CAP_STD) {
 		v4l2_std_id std;
@@ -841,7 +841,7 @@ int testReadWrite(struct node *node)
 	return 0;
 }
 
-static int setupM2M(struct node *node, cv4l_queue &q, bool init = true)
+static auto setupM2M(struct node *node, cv4l_queue &q, bool init = true)
 {
 	__u32 caps;
 
@@ -874,7 +874,7 @@ static int setupM2M(struct node *node, cv4l_queue &q, bool init = true)
 	return 0;
 }
 
-static int captureBufs(struct node *node, struct node *node_m2m_cap, const cv4l_queue &q,
+static auto captureBufs(struct node *node, struct node *node_m2m_cap, const cv4l_queue &q,
 		cv4l_queue &m2m_q, unsigned frame_count, int pollmode,
 		unsigned &capture_count)
 {
@@ -1162,7 +1162,7 @@ static int captureBufs(struct node *node, struct node *node_m2m_cap, const cv4l_
 	return 0;
 }
 
-static int bufferOutputErrorTest(struct node *node, const buffer &orig_buf)
+static auto bufferOutputErrorTest(struct node *node, const buffer &orig_buf)
 {
 	buffer buf(orig_buf);
 	bool have_prepare = false;
@@ -1205,7 +1205,7 @@ static int bufferOutputErrorTest(struct node *node, const buffer &orig_buf)
 	return 0;
 }
 
-static int setupMmap(struct node *node, cv4l_queue &q)
+static auto setupMmap(struct node *node, cv4l_queue &q)
 {
 	bool cache_hints = q.g_capabilities() & V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS;
 
@@ -1526,7 +1526,7 @@ int testMmap(struct node *node, struct node *node_m2m_cap, unsigned frame_count,
 	return 0;
 }
 
-static int setupUserPtr(struct node *node, cv4l_queue &q)
+static auto setupUserPtr(struct node *node, cv4l_queue &q)
 {
 	for (unsigned i = 0; i < q.g_buffers(); i++) {
 		buffer buf(q);
@@ -1767,7 +1767,7 @@ int testUserPtr(struct node *node, struct node *node_m2m_cap, unsigned frame_cou
 	return 0;
 }
 
-static int setupDmaBuf(struct node *expbuf_node, struct node *node,
+static auto setupDmaBuf(struct node *expbuf_node, struct node *node,
 		       cv4l_queue &q, cv4l_queue &exp_q)
 {
 	fail_on_test(exp_q.reqbufs(expbuf_node, q.g_buffers()));
@@ -2422,7 +2422,7 @@ static void pthread_sighandler(int sig)
 {
 }
 
-static int testBlockingDQBuf(struct node *node, cv4l_queue &q)
+static auto testBlockingDQBuf(struct node *node, cv4l_queue &q)
 {
 	DqbufThread thread_dqbuf(&q, node);
 	StreamoffThread thread_streamoff(&q, node);
@@ -2565,7 +2565,7 @@ int restoreFormat(struct node *node)
 	return 0;
 }
 
-static int testStreaming(struct node *node, unsigned frame_count)
+static auto testStreaming(struct node *node, unsigned frame_count)
 {
 	int type = node->g_type();
 
@@ -2667,7 +2667,7 @@ struct selTest {
 
 static std::vector<selTest> selTests;
 
-static selTest createSelTest(const cv4l_fmt &fmt,
+static auto createSelTest(const cv4l_fmt &fmt,
 		const v4l2_selection &crop, const v4l2_selection &compose)
 {
 	selTest st = {
@@ -2679,7 +2679,7 @@ static selTest createSelTest(const cv4l_fmt &fmt,
 	return st;
 }
 
-static selTest createSelTest(struct node *node)
+static auto createSelTest(struct node *node)
 {
 	v4l2_selection crop = {
 		node->g_selection_type(),
@@ -2697,7 +2697,7 @@ static selTest createSelTest(struct node *node)
 	return createSelTest(fmt, crop, compose);
 }
 
-static bool haveSelTest(const selTest &test)
+static auto haveSelTest(const selTest &test)
 {
 	return std::any_of(selTests.begin(), selTests.end(), [&](const selTest &selfTest)
 		{ return &selfTest != &test; });
@@ -3084,7 +3084,7 @@ static void streamM2MRun(struct node *node, unsigned frame_count)
 	       ok(testMmap(node, node, frame_count, POLL_MODE_SELECT)));
 }
 
-static int streamM2MOutFormat(struct node *node, __u32 pixelformat, __u32 w, __u32 h,
+static auto streamM2MOutFormat(struct node *node, __u32 pixelformat, __u32 w, __u32 h,
 			      unsigned frame_count)
 {
 	unsigned cap_type = node->g_type();

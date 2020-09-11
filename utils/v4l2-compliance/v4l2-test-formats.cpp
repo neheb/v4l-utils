@@ -45,7 +45,7 @@ static const __u32 buftype2cap[] = {
 	V4L2_CAP_META_OUTPUT,
 };
 
-static int testEnumFrameIntervals(struct node *node, __u32 pixfmt,
+static auto testEnumFrameIntervals(struct node *node, __u32 pixfmt,
 				  __u32 w, __u32 h, __u32 type)
 {
 	struct v4l2_frmivalenum frmival;
@@ -126,7 +126,7 @@ static int testEnumFrameIntervals(struct node *node, __u32 pixfmt,
 	return 0;
 }
 
-static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
+static auto testEnumFrameSizes(struct node *node, __u32 pixfmt)
 {
 	struct v4l2_frmsizeenum frmsize;
 	struct v4l2_frmsize_stepwise *sw = &frmsize.stepwise;
@@ -221,7 +221,7 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 	return 0;
 }
 
-static int testEnumFormatsType(struct node *node, unsigned type)
+static auto testEnumFormatsType(struct node *node, unsigned type)
 {
 	pixfmt_map &map = node->buftype_pixfmts[type];
 	struct v4l2_fmtdesc fmtdesc;
@@ -343,7 +343,7 @@ int testEnumFormats(struct node *node)
 	return supported ? 0 : ENOTTY;
 }
 
-static int testColorspace(bool non_zero_colorspace,
+static auto testColorspace(bool non_zero_colorspace,
 			  __u32 pixelformat, __u32 colorspace, __u32 ycbcr_enc, __u32 quantization)
 {
 	if (non_zero_colorspace)
@@ -418,7 +418,7 @@ static void createInvalidFmt(struct v4l2_format &fmt, struct v4l2_clip &clip, un
 	}
 }
 
-static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4l2_format &fmt, bool have_clip = false)
+static auto testFormatsType(struct node *node, int ret,  unsigned type, struct v4l2_format &fmt, bool have_clip = false)
 {
 	pixfmt_map &map = node->buftype_pixfmts[type];
 	pixfmt_map *map_splane;
@@ -638,7 +638,7 @@ int testGetFormats(struct node *node)
 	return supported ? 0 : ENOTTY;
 }
 
-static bool matchFormats(const struct v4l2_format &f1, const struct v4l2_format &f2)
+static auto matchFormats(const struct v4l2_format &f1, const struct v4l2_format &f2)
 {
 	const struct v4l2_pix_format &pix1 = f1.fmt.pix;
 	const struct v4l2_pix_format &pix2 = f2.fmt.pix;
@@ -804,7 +804,7 @@ int testTryFormats(struct node *node)
 	return node->valid_buftypes ? result : ENOTTY;
 }
 
-static int testJPEGColorspace(const cv4l_fmt &fmt_raw, const cv4l_fmt &fmt_jpeg,
+static auto testJPEGColorspace(const cv4l_fmt &fmt_raw, const cv4l_fmt &fmt_jpeg,
 			      bool is_decoder)
 {
 	fail_on_test(fmt_raw.g_colorspace() != V4L2_COLORSPACE_SRGB);
@@ -830,7 +830,7 @@ static int testJPEGColorspace(const cv4l_fmt &fmt_raw, const cv4l_fmt &fmt_jpeg,
 	return 0;
 }
 
-static int testM2MFormats(struct node *node)
+static auto testM2MFormats(struct node *node)
 {
 	cv4l_fmt fmt_out;
 	cv4l_fmt fmt;
@@ -941,7 +941,7 @@ static int testM2MFormats(struct node *node)
 	return 0;
 }
 
-static int testGlobalFormat(struct node *node, int type)
+static auto testGlobalFormat(struct node *node, int type)
 {
 	struct v4l2_fmtdesc fdesc;
 	struct v4l2_frmsizeenum fsize;
@@ -1217,7 +1217,7 @@ int testSetFormats(struct node *node)
 	return 0;
 }
 
-static int testSlicedVBICapType(struct node *node, unsigned type)
+static auto testSlicedVBICapType(struct node *node, unsigned type)
 {
 	struct v4l2_sliced_vbi_cap cap;
 	bool sliced_type = (type == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE ||
@@ -1260,7 +1260,7 @@ int testSlicedVBICap(struct node *node)
 	return testSlicedVBICapType(node, V4L2_BUF_TYPE_VIDEO_CAPTURE);
 }
 
-static int testParmStruct(struct node *node, struct v4l2_streamparm &parm)
+static auto testParmStruct(struct node *node, struct v4l2_streamparm &parm)
 {
 	bool is_stateful_enc = node->codec_mask & STATEFUL_ENCODER;
 	struct v4l2_captureparm *cap = &parm.parm.capture;
@@ -1311,7 +1311,7 @@ static int testParmStruct(struct node *node, struct v4l2_streamparm &parm)
 	return 0;
 }
 
-static int testParmType(struct node *node, unsigned type)
+static auto testParmType(struct node *node, unsigned type)
 {
 	struct v4l2_streamparm parm;
 	bool is_stateful_enc = node->codec_mask & STATEFUL_ENCODER;
@@ -1459,14 +1459,14 @@ int testParm(struct node *node)
 	return supported ? 0 : ENOTTY;
 }
 
-static bool rect_is_inside(const struct v4l2_rect *r1, const struct v4l2_rect *r2)
+static auto rect_is_inside(const struct v4l2_rect *r1, const struct v4l2_rect *r2)
 {
 	return r1->left >= r2->left && r1->top >= r2->top &&
 	       r1->left + r1->width <= r2->left + r2->width &&
 	       r1->top + r1->height <= r2->top + r2->height;
 }
 
-static int testBasicSelection(struct node *node, unsigned type, unsigned target)
+static auto testBasicSelection(struct node *node, unsigned type, unsigned target)
 {
 	struct v4l2_selection sel = {
 		type,
@@ -1514,7 +1514,7 @@ static int testBasicSelection(struct node *node, unsigned type, unsigned target)
 	return 0;
 }
 
-static int testBasicCrop(struct node *node, unsigned type)
+static auto testBasicCrop(struct node *node, unsigned type)
 {
 	struct v4l2_selection sel_crop = {
 		type,
@@ -1560,7 +1560,7 @@ static int testBasicCrop(struct node *node, unsigned type)
 	return 0;
 }
 
-static int testLegacyCrop(struct node *node)
+static auto testLegacyCrop(struct node *node)
 {
 	struct v4l2_cropcap cap = {
 		node->g_selection_type()
@@ -1656,7 +1656,7 @@ int testCropping(struct node *node)
 	return 0;
 }
 
-static int testBasicCompose(struct node *node, unsigned type)
+static auto testBasicCompose(struct node *node, unsigned type)
 {
 	struct v4l2_selection sel_compose = {
 		type,
@@ -1751,7 +1751,7 @@ int testComposing(struct node *node)
 	return 0;
 }
 
-static int testBasicScaling(struct node *node, const struct v4l2_format &cur)
+static auto testBasicScaling(struct node *node, const struct v4l2_format &cur)
 {
 	struct v4l2_selection sel_crop = {
 		V4L2_BUF_TYPE_VIDEO_CAPTURE,
@@ -1871,7 +1871,7 @@ static int testBasicScaling(struct node *node, const struct v4l2_format &cur)
 	return 0;
 }
 
-static int testM2MScaling(struct node *node)
+static auto testM2MScaling(struct node *node)
 {
 	struct v4l2_selection sel_compose = {
 		V4L2_BUF_TYPE_VIDEO_CAPTURE,

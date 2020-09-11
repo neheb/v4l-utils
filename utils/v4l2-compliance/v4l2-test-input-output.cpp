@@ -28,7 +28,7 @@
 
 #define MAGIC 0x1eadbeef
 
-static int checkEnumFreqBands(struct node *node, __u32 tuner, __u32 type, __u32 caps,
+static auto checkEnumFreqBands(struct node *node, __u32 tuner, __u32 type, __u32 caps,
 			      __u32 rangelow, __u32 rangehigh)
 {
 	const __u32 band_caps = V4L2_TUNER_CAP_LOW | V4L2_TUNER_CAP_1HZ;
@@ -79,7 +79,7 @@ static int checkEnumFreqBands(struct node *node, __u32 tuner, __u32 type, __u32 
 	return 0;
 }
 
-static int checkTuner(struct node *node, const struct v4l2_tuner &tuner,
+static auto checkTuner(struct node *node, const struct v4l2_tuner &tuner,
 		unsigned t, v4l2_std_id std)
 {
 	bool valid_modes[5] = { true, false, false, false, false };
@@ -403,7 +403,7 @@ int testTunerHwSeek(struct node *node)
 	return ret == ENOTTY ? ret : 0;
 }
 
-static int checkInput(struct node *node, const struct v4l2_input &descr, unsigned i)
+static auto checkInput(struct node *node, const struct v4l2_input &descr, unsigned i)
 {
 	__u32 mask = (1 << node->audio_inputs) - 1;
 	struct v4l2_selection sel;
@@ -514,7 +514,7 @@ int testInput(struct node *node)
 	return 0;
 }
 
-static int checkInputAudio(const struct v4l2_audio &descr, unsigned i)
+static auto checkInputAudio(const struct v4l2_audio &descr, unsigned i)
 {
 	if (descr.index != i)
 		return fail("invalid index\n");
@@ -558,7 +558,7 @@ int testEnumInputAudio(struct node *node)
 	return 0;
 }
 
-static int checkInputAudioSet(struct node *node, __u32 audioset)
+static auto checkInputAudioSet(struct node *node, __u32 audioset)
 {
 	struct v4l2_audio input = { 0 };
 	unsigned i;
@@ -615,7 +615,7 @@ int testInputAudio(struct node *node)
 	return node->audio_inputs ? 0 : ENOTTY;
 }
 
-static int checkModulator(struct node *node, const struct v4l2_modulator &mod, unsigned m)
+static auto checkModulator(struct node *node, const struct v4l2_modulator &mod, unsigned m)
 {
 	bool tv = !node->is_radio && !node->is_sdr;
 
@@ -787,7 +787,7 @@ int testModulatorFreq(struct node *node)
 	return node->modulators ? 0 : ENOTTY;
 }
 
-static int checkOutput(struct node *node, const struct v4l2_output &descr, unsigned o)
+static auto checkOutput(struct node *node, const struct v4l2_output &descr, unsigned o)
 {
 	__u32 mask = (1 << node->audio_outputs) - 1;
 	struct v4l2_selection sel;
@@ -888,7 +888,7 @@ int testOutput(struct node *node)
 	return 0;
 }
 
-static int checkOutputAudio(const struct v4l2_audioout &descr, unsigned o)
+static auto checkOutputAudio(const struct v4l2_audioout &descr, unsigned o)
 {
 	if (descr.index != o)
 		return fail("invalid index\n");
@@ -931,7 +931,7 @@ int testEnumOutputAudio(struct node *node)
 	return 0;
 }
 
-static int checkOutputAudioSet(struct node *node, __u32 audioset)
+static auto checkOutputAudioSet(struct node *node, __u32 audioset)
 {
 	struct v4l2_audioout output;
 	unsigned i;

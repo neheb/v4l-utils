@@ -29,7 +29,7 @@
 
 #define V4L2_CTRL_CLASS_VIVID 0x00f00000
 
-static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
+static auto checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 {
 	struct v4l2_querymenu qmenu;
 	__u32 fl = qctrl.flags;
@@ -345,7 +345,7 @@ int testQueryControls(struct node *node)
 	return 0;
 }
 
-static int checkSimpleCtrl(const struct v4l2_control &ctrl, const struct test_query_ext_ctrl &qctrl)
+static auto checkSimpleCtrl(const struct v4l2_control &ctrl, const struct test_query_ext_ctrl &qctrl)
 {
 	if (ctrl.id != qctrl.id)
 		return fail("control id mismatch\n");
@@ -524,7 +524,7 @@ int testSimpleControls(struct node *node)
 	return 0;
 }
 
-static int checkExtendedCtrl(const struct v4l2_ext_control &ctrl, const struct test_query_ext_ctrl &qctrl)
+static auto checkExtendedCtrl(const struct v4l2_ext_control &ctrl, const struct test_query_ext_ctrl &qctrl)
 {
 	int len;
 

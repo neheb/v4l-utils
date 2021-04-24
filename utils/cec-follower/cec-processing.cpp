@@ -3,6 +3,7 @@
  * Copyright 2016 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
  */
 
+#include <array>
 #include <cerrno>
 #include <ctime>
 #include <string>
@@ -37,7 +38,7 @@ struct cec_enum_values {
 	__u8 value;
 };
 
-struct la_info la_info[15];
+std::array<struct la_info, 15> la_info;
 
 static struct timespec start_monotonic;
 static struct timeval start_timeofday;
@@ -120,8 +121,8 @@ void reply_feature_abort(struct node *node, struct cec_msg *msg, __u8 reason)
 	if (cec_msg_is_broadcast(msg) || cec_msg_initiator(msg) == CEC_LOG_ADDR_UNREGISTERED)
 		return;
 	if (reason == CEC_OP_ABORT_UNRECOGNIZED_OP) {
-		la_info[la].feature_aborted[opcode].count++;
-		if (la_info[la].feature_aborted[opcode].count == 2) {
+		la_info[la].feature_aborted[opcode].first++;
+		if (la_info[la].feature_aborted[opcode].first == 2) {
 			/* If the Abort Reason was "Unrecognized opcode", the Initiator should not send
 			   the same message to the same Follower again at that time to avoid saturating
 			   the bus. */
@@ -129,13 +130,11 @@ void reply_feature_abort(struct node *node, struct cec_msg *msg, __u8 reason)
 			     opcode2s(msg).c_str(), la, cec_la2s(la));
 			warn("replying Feature Abort [Unrecognized Opcode] to the same message.\n");
 		}
-	}
-	else if (la_info[la].feature_aborted[opcode].count) {
+	} else if (la_info[la].feature_aborted[opcode].first) {
 		warn("Replying Feature Abort with abort reason different than [Unrecognized Opcode]\n");
 		warn("to message that has previously been replied Feature Abort to with [Unrecognized Opcode].\n");
-	}
-	else
-		la_info[la].feature_aborted[opcode].ts = ts_now;
+	} else
+		la_info[la].feature_aborted[opcode].second = ts_now;
 
 	cec_msg_reply_feature_abort(msg, reason);
 	transmit(node, msg);
@@ -942,7 +941,7 @@ void testProcessing(struct node *node, bool wallclock)
 					node->state.active_source_pa = CEC_PHYS_ADDR_INVALID;
 					me = CEC_LOG_ADDR_INVALID;
 				}
-				memset(la_info, 0, sizeof(la_info));
+				la_info = {};
 			}
 		}
 		if (FD_ISSET(fd, &rd_fds)) {
@@ -965,9 +964,8 @@ void testProcessing(struct node *node, bool wallclock)
 			if (node->ignore_opcode[msg.msg[1]] & (1 << from))
 				continue;
 
-			if (from != CEC_LOG_ADDR_UNREGISTERED &&
-			    la_info[from].feature_aborted[opcode].ts &&
-			    ts_to_ms(get_ts() - la_info[from].feature_aborted[opcode].ts) < 200) {
+			if (from != CEC_LOG_ADDR_UNREGISTERED && la_info[from].feature_aborted[opcode].second &&
+			    ts_to_ms(get_ts() - la_info[from].feature_aborted[opcode].second) < 200) {
 				warn("Received message %s from LA %d (%s) less than 200 ms after\n",
 				     opcode2s(&msg).c_str(), from, cec_la2s(from));
 				warn("replying Feature Abort (not [Unrecognized Opcode]) to the same message.\n");
@@ -1019,7 +1017,7 @@ void testProcessing(struct node *node, bool wallclock)
 			transmit(node, &msg);
 			if (msg.tx_status & CEC_TX_STATUS_NACK) {
 				dev_info("Logical address %d stopped responding to polling message.\n", poll_la);
-				memset(&la_info[poll_la], 0, sizeof(la_info[poll_la]));
+				la_info[poll_la] = {};
 				node->remote_la_mask &= ~(1 << poll_la);
 				node->remote_phys_addr[poll_la] = CEC_PHYS_ADDR_INVALID;
 			}

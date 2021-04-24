@@ -27,7 +27,7 @@
 #include "compiler.h"
 #include "v4l2-compliance.h"
 
-static constexpr __u32 buftype2cap[] = {
+static constexpr std::array<__u32, 15> buftype2cap{
 	0,
 	V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_M2M,
 	V4L2_CAP_VIDEO_OUTPUT | V4L2_CAP_VIDEO_M2M,
@@ -1095,7 +1095,7 @@ int testSetFormats(struct node *node)
 {
 	struct v4l2_clip clip, clip_set;
 	struct v4l2_format fmt, fmt_set;
-	struct v4l2_format initial_fmts[V4L2_BUF_TYPE_LAST + 1];
+	std::array<v4l2_format, V4L2_BUF_TYPE_LAST + 1> initial_fmts;
 	int type;
 	int ret;
 

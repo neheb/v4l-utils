@@ -8,6 +8,8 @@
 #ifndef _CEC_FOLLOWER_H_
 #define _CEC_FOLLOWER_H_
 
+#include <array>
+
 #include <linux/cec-funcs.h>
 #include "cec-htng-funcs.h"
 
@@ -78,14 +80,11 @@ struct node {
 
 struct la_info {
 	__u64 ts;
-	struct {
-		unsigned count;
-		__u64 ts;
-	} feature_aborted[256];
+	std::array<std::pair<unsigned, __u64>, 256> feature_aborted;
 	__u16 phys_addr;
 };
 
-extern struct la_info la_info[15];
+extern std::array<struct la_info, 15> la_info;
 
 struct short_audio_desc {
 	/* Byte 1 */

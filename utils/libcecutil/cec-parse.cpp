@@ -3,6 +3,7 @@
  * Copyright 2019 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
  */
 
+#include <array>
 #include <cctype>
 #include <cstring>
 #include <string>
@@ -108,13 +109,13 @@ static __u32 *args2short_descrs(__u32 descriptor1,
 				__u32 descriptor3,
 				__u32 descriptor4)
 {
-	static __u32 descriptors[4];
-
-	descriptors[0] = descriptor1;
-	descriptors[1] = descriptor2;
-	descriptors[2] = descriptor3;
-	descriptors[3] = descriptor4;
-	return descriptors;
+	static std::array<__u32, 4> descriptors{
+		descriptor1,
+		descriptor2,
+		descriptor3,
+		descriptor4,
+	};
+	return descriptors.data();
 }
 
 static __u8 *args2short_aud_fmt_ids(__u8 audio_format_id1,
@@ -122,13 +123,13 @@ static __u8 *args2short_aud_fmt_ids(__u8 audio_format_id1,
 				    __u8 audio_format_id3,
 				    __u8 audio_format_id4)
 {
-	static __u8 audio_format_ids[4];
-
-	audio_format_ids[0] = audio_format_id1;
-	audio_format_ids[1] = audio_format_id2;
-	audio_format_ids[2] = audio_format_id3;
-	audio_format_ids[3] = audio_format_id4;
-	return audio_format_ids;
+	static std::array<__u8, 4> audio_format_ids{
+		audio_format_id1,
+		audio_format_id2,
+		audio_format_id3,
+		audio_format_id4,
+	};
+	return audio_format_ids.data();
 }
 
 static __u8 *args2short_aud_fmt_codes(__u8 audio_format_code1,
@@ -136,13 +137,13 @@ static __u8 *args2short_aud_fmt_codes(__u8 audio_format_code1,
 				      __u8 audio_format_code3,
 				      __u8 audio_format_code4)
 {
-	static __u8 audio_format_codes[4];
-
-	audio_format_codes[0] = audio_format_code1;
-	audio_format_codes[1] = audio_format_code2;
-	audio_format_codes[2] = audio_format_code3;
-	audio_format_codes[3] = audio_format_code4;
-	return audio_format_codes;
+	static std::array<__u8, 4> audio_format_codes{
+		audio_format_code1,
+		audio_format_code2,
+		audio_format_code3,
+		audio_format_code4,
+	};
+	return audio_format_codes.data();
 }
 
 int cec_parse_subopt(char **subs, const char * const *subopts, char **value)

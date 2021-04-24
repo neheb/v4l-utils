@@ -36,8 +36,8 @@ static cv4l_fmt cur_fmt;
 static cv4l_fmt cur_m2m_fmt;
 static int stream_from_fd = -1;
 static bool stream_use_hdr;
-static unsigned max_bytesused[VIDEO_MAX_PLANES];
-static unsigned min_data_offset[VIDEO_MAX_PLANES];
+static std::array<unsigned int, VIDEO_MAX_PLANES> max_bytesused;
+static std::array<unsigned int, VIDEO_MAX_PLANES> min_data_offset;
 
 bool operator<(struct timeval const& n1, struct timeval const& n2)
 {
@@ -60,7 +60,7 @@ struct buf_seq {
 
 static struct buf_seq last_seq, last_m2m_seq;
 
-static int buf_req_fds[VIDEO_MAX_FRAME * 2];
+static std::array<int, VIDEO_MAX_FRAME * 2> buf_req_fds;
 
 static inline int named_ioctl_fd(int fd, bool trace, const char *cmd_name, unsigned long cmd, void *arg)
 {
@@ -845,7 +845,7 @@ static int captureBufs(struct node *node, struct node *node_m2m_cap, const cv4l_
 		cv4l_queue &m2m_q, unsigned frame_count, int pollmode,
 		unsigned &capture_count)
 {
-	static constexpr const char *pollmode_str[] = {
+	static constexpr std::array<const char *, 3> pollmode_str{
 		"",
 		" (select)",
 		" (epoll)",
@@ -1677,8 +1677,8 @@ int testUserPtr(struct node *node, struct node *node_m2m_cap, unsigned frame_cou
 			}
 		}
 		// captureBufs() will update these values
-		memset(max_bytesused, 0, sizeof(max_bytesused));
-		memset(min_data_offset, 0xff, sizeof(min_data_offset));
+		max_bytesused = {};
+		min_data_offset.fill(0xff);
 
 		fail_on_test(setupUserPtr(node, q));
 
@@ -2900,9 +2900,10 @@ static void streamFmt(struct node *node, __u32 pixelformat, __u32 w, __u32 h,
 		return;
 	}
 
-	v4l2_selection *selections[2][4] = {
-		{ &min_crop, &max_crop, &min_compose, &max_compose },
-		{ &min_compose, &max_compose, &min_crop, &max_crop }
+	using sel = std::array<v4l2_selection *, 4>;
+	std::array<sel, 2> selections{
+		sel{ &min_crop, &max_crop, &min_compose, &max_compose },
+		sel{ &min_compose, &max_compose, &min_crop, &max_crop },
 	};
 
 	selTest test = createSelTest(node);

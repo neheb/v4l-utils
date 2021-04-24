@@ -658,19 +658,19 @@ static void print_edid_mods(const struct v4l2_edid *e)
 	}
 	loc = get_edid_vid_cap_location(e->edid, e->blocks * 128);
 	if (loc >= 0) {
-		static const char *pt_scan[] = {
+		static constexpr const char *pt_scan[] = {
 			"No Data",
 			"Always Overscanned",
 			"Always Underscanned",
 			"Supports both over- and underscan"
 		};
-		static const char *it_scan[] = {
+		static constexpr const char *it_scan[] = {
 			"IT Formats not supported",
 			"Always Overscanned",
 			"Always Underscanned",
 			"Supports both over- and underscan"
 		};
-		static const char *ce_scan[] = {
+		static constexpr const char *ce_scan[] = {
 			"CE Formats not supported",
 			"Always Overscanned",
 			"Always Underscanned",
@@ -1087,7 +1087,7 @@ void edid_cmd(int ch, char *optarg)
 			break;
 		subs = optarg;
 		while (*subs != '\0') {
-			static const char *const subopts[] = {
+			static constexpr const char *subopts[] = {
 				"pad",
 				"type",
 				"edid",
@@ -1307,7 +1307,7 @@ void edid_cmd(int ch, char *optarg)
 			break;
 		subs = optarg;
 		while (*subs != '\0') {
-			static const char *const subopts[] = {
+			static constexpr const char *subopts[] = {
 				"pad",
 				"startblock",
 				"blocks",

@@ -1,3 +1,4 @@
+#include <array>
 #include <cctype>
 #include <cstring>
 
@@ -658,23 +659,23 @@ static void print_edid_mods(const struct v4l2_edid *e)
 	}
 	loc = get_edid_vid_cap_location(e->edid, e->blocks * 128);
 	if (loc >= 0) {
-		static constexpr const char *pt_scan[] = {
+		static constexpr std::array<const char *, 4> pt_scan{
 			"No Data",
 			"Always Overscanned",
 			"Always Underscanned",
-			"Supports both over- and underscan"
+			"Supports both over- and underscan",
 		};
-		static constexpr const char *it_scan[] = {
+		static constexpr std::array<const char *, 4> it_scan{
 			"IT Formats not supported",
 			"Always Overscanned",
 			"Always Underscanned",
-			"Supports both over- and underscan"
+			"Supports both over- and underscan",
 		};
-		static constexpr const char *ce_scan[] = {
+		static constexpr std::array<const char *, 4> ce_scan{
 			"CE Formats not supported",
 			"Always Overscanned",
 			"Always Underscanned",
-			"Supports both over- and underscan"
+			"Supports both over- and underscan",
 		};
 		__u8 v = e->edid[loc];
 

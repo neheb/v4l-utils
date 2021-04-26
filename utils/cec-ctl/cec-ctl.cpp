@@ -36,12 +36,12 @@
 
 static struct timespec start_monotonic;
 static struct timeval start_timeofday;
-static bool ignore_la[16];
+static std::array<bool, 16> ignore_la;
 static const char *edid_path;
 static bool is_paused;
 
 #define POLL_FAKE_OPCODE 256
-static unsigned short ignore_opcode[257];
+static std::array<unsigned short, 257> ignore_opcode;
 
 static char options[512];
 
@@ -141,7 +141,7 @@ struct node {
 	unsigned num_log_addrs;
 	__u16 log_addr_mask;
 	__u16 phys_addr;
-	__u8 log_addr[CEC_MAX_LOG_ADDRS];
+	std::array<__u8, CEC_MAX_LOG_ADDRS> log_addr;
 };
 
 #define doioctl(n, r, p) cec_named_ioctl((n)->fd, #r, r, p)
@@ -526,7 +526,7 @@ static void log_event(struct cec_event &ev, bool show)
  * Bits 23-8 contain the physical address, bits 0-3 the logical address
  * (equal to the index).
  */
-static __u32 phys_addrs[16];
+static std::array<__u32, 16> phys_addrs;
 
 static int showTopologyDevice(struct node *node, unsigned i, unsigned la)
 {
@@ -699,10 +699,8 @@ static int showTopology(struct node *node)
 			printf("\t\t%s for addr %d\n", cec_status2s(msg).c_str(), i);
 	}
 
-	__u32 pas[16];
-
-	memcpy(pas, phys_addrs, sizeof(pas));
-	std::sort(pas, pas + 16);
+	std::array<__u32, 16> pas{ phys_addrs };
+	std::sort(pas.begin(), pas.end());
 	int level = 0;
 	unsigned last_pa_mask = 0;
 
@@ -1983,7 +1981,7 @@ int main(int argc, char **argv)
 	int ch;
 	int i;
 
-	memset(phys_addrs, 0xff, sizeof(phys_addrs));
+	phys_addrs.fill(0xff);
 
 	for (i = 0; long_options[i].name; i++) {
 		if (!isalpha(long_options[i].val))

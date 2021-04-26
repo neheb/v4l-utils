@@ -70,7 +70,7 @@ enum Option {
 	OptLast = 256
 };
 
-static char options[OptLast];
+static std::array<char, OptLast> options;
 
 static int app_result;
 static int tests_total, tests_ok;
@@ -709,9 +709,8 @@ static int testCap(struct node *node)
 #define NR_OPENS 100
 static int testUnlimitedOpens(struct node *node)
 {
-	int fds[NR_OPENS];
-	unsigned i;
-	bool ok;
+	std::array<int, NR_OPENS> fds;
+	bool ok = true;
 
 	/*
 	 * There should *not* be an artificial limit to the number
@@ -724,15 +723,16 @@ static int testUnlimitedOpens(struct node *node)
 	 * If there are resource limits, then check against those limits
 	 * where they are actually needed.
 	 */
-	for (i = 0; i < NR_OPENS; i++) {
-		fds[i] = open(node->device, O_RDWR);
-		if (fds[i] < 0)
+	for (auto &fd : fds) {
+		fd = open(node->device, O_RDWR);
+		if (fd < 0) {
+			ok = false;
 			break;
+		}
 	}
-	ok = i == NR_OPENS;
-	while (i--)
-		close(fds[i]);
 	fail_on_test(!ok);
+	for (auto &fd : fds)
+		close(fd);
 	return 0;
 }
 

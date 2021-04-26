@@ -729,23 +729,23 @@ static void processMsg(struct node *node, struct cec_msg &msg, unsigned me)
 			break;
 
 		/* The list of formats that the follower 'supports' */
-		const struct short_audio_desc supported_formats[] = {
-			{ 2, SAD_FMT_CODE_AC3,
+		constexpr std::array<short_audio_desc, 6> supported_formats{
+			short_audio_desc{ 2, SAD_FMT_CODE_AC3,
 			  SAD_SAMPLE_FREQ_MASK_32 | SAD_SAMPLE_FREQ_MASK_44_1,
 			  { 64 }, 0, 0 },
-			{ 4, SAD_FMT_CODE_AC3,
+			short_audio_desc{ 4, SAD_FMT_CODE_AC3,
 			  SAD_SAMPLE_FREQ_MASK_32,
 			  { 32 }, 0, 0 },
-			{ 4, SAD_FMT_CODE_ONE_BIT_AUDIO,
+			short_audio_desc{ 4, SAD_FMT_CODE_ONE_BIT_AUDIO,
 			  SAD_SAMPLE_FREQ_MASK_48 | SAD_SAMPLE_FREQ_MASK_192,
 			  { 123 }, 0, 0 },
-			{ 8, SAD_FMT_CODE_EXTENDED,
+			short_audio_desc{ 8, SAD_FMT_CODE_EXTENDED,
 			  SAD_SAMPLE_FREQ_MASK_96,
 			  { 0 }, 0, SAD_EXT_TYPE_DRA },
-			{ 2, SAD_FMT_CODE_EXTENDED,
+			short_audio_desc{ 2, SAD_FMT_CODE_EXTENDED,
 			  SAD_SAMPLE_FREQ_MASK_176_4,
 			  { SAD_FRAME_LENGTH_MASK_960 | SAD_FRAME_LENGTH_MASK_1024 }, 1, SAD_EXT_TYPE_MPEG4_HE_AAC_SURROUND },
-			{ 2, SAD_FMT_CODE_EXTENDED,
+			short_audio_desc{ 2, SAD_FMT_CODE_EXTENDED,
 			  SAD_SAMPLE_FREQ_MASK_44_1,
 			  { SAD_BIT_DEPTH_MASK_16 | SAD_BIT_DEPTH_MASK_24 }, 0, SAD_EXT_TYPE_LPCM_3D_AUDIO },
 		};

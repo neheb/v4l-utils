@@ -82,7 +82,7 @@ static int checkEnumFreqBands(struct node *node, __u32 tuner, __u32 type, __u32 
 static int checkTuner(struct node *node, const struct v4l2_tuner &tuner,
 		unsigned t, v4l2_std_id std)
 {
-	bool valid_modes[5] = { true, false, false, false, false };
+	std::array<bool, 5> valid_modes{ true, false, false, false, false };
 	bool tv = node->is_video || node->is_vbi || node->is_meta;
 	bool hwseek_caps = tuner.capability & (V4L2_TUNER_CAP_HWSEEK_BOUNDED |
 			V4L2_TUNER_CAP_HWSEEK_WRAP | V4L2_TUNER_CAP_HWSEEK_PROG_LIM);

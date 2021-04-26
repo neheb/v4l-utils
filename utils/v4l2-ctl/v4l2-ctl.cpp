@@ -36,7 +36,7 @@
 #include <sys/klog.h>
 #endif
 
-char options[OptLast];
+std::array<char, OptLast> options;
 
 static int app_result;
 int verbose;
@@ -523,11 +523,11 @@ void printfmt(int fd, const struct v4l2_format &vfmt)
 
 static std::string frmtype2s(unsigned type)
 {
-	static constexpr const char *types[] = {
+	static constexpr std::array<const char *, 4> types{
 		"Unknown",
 		"Discrete",
 		"Continuous",
-		"Stepwise"
+		"Stepwise",
 	};
 
 	if (type > 3)

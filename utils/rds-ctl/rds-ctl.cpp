@@ -62,7 +62,7 @@ enum Option {
 
 struct ctl_parameters {
 	bool terminate_decoding;
-	char options[OptLast];
+	std::array<char, OptLast> options;
 	char fd_name[80];
 	bool filemode_active;
 	double freq;
@@ -574,7 +574,7 @@ static void print_rds_pi(const struct v4l2_rds *handle)
 	uint16_t pi = handle->pi;
 
 	if (handle->is_rbds) {
-		char callsign[5] = { 0 };
+		std::array<char, 5> callsign{};
 		uint8_t nibble = handle->pi >> 12;
 
 		if (pi >= 0xafa1 && pi <= 0xafa9)
@@ -597,7 +597,7 @@ static void print_rds_pi(const struct v4l2_rds *handle)
 			callsign[1] = 'A' + pi / 676;
 			callsign[2] = 'A' + (pi / 26) % 26;
 			callsign[3] = 'A' + pi % 26;
-			printf("\nCall Sign: %s", callsign);
+			printf("\nCall Sign: %s", callsign.data());
 		}
 		if (nibble != 0x0b && nibble != 0x0d && nibble != 0x0e)
 			return;

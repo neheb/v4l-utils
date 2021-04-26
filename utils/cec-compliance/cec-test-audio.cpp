@@ -422,10 +422,10 @@ static int sac_sad_req_multiple(struct node *node, unsigned me, unsigned la, boo
 	   with a single format, we also get a response when the same audio format
 	   occurs in a request together with other formats. */
 	struct cec_msg msg = {};
-	__u8 audio_format_id[4] = { };
-	__u8 audio_format_code[4];
+	std::array<__u8, 4> audio_format_id{};
+	std::array<__u8, 4> audio_format_code;
 
-	for (int i = 0; i < 4; i++) {
+	for (size_t i = 0; i < audio_format_code.size(); i++) {
 		if (node->remote[la].supp_format_code <= 12)
 			audio_format_code[i] = node->remote[la].supp_format_code - 1 + i;
 		else

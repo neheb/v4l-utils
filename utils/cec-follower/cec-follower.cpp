@@ -40,7 +40,7 @@ enum Option {
 	OptLast = 256
 };
 
-static char options[OptLast];
+static std::array<char, OptLast> options;
 
 bool show_info;
 bool show_msgs;

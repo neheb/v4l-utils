@@ -1,3 +1,4 @@
+#include <array>
 #include <cstring>
 
 #include <netdb.h>
@@ -43,7 +44,7 @@ static bool to_with_hdr;
 static char *host_to;
 #ifndef NO_STREAM_TO
 static unsigned host_port_to = V4L_STREAM_PORT;
-static unsigned bpl_cap[VIDEO_MAX_PLANES];
+static std::array<unsigned int, VIDEO_MAX_PLANES> bpl_cap;
 #endif
 static bool host_lossless;
 static int host_fd_to = -1;
@@ -57,7 +58,7 @@ static int host_fd_from = -1;
 static struct tpg_data tpg;
 static unsigned output_field = V4L2_FIELD_NONE;
 static bool output_field_alt;
-static unsigned bpl_out[VIDEO_MAX_PLANES];
+static std::array<unsigned int, VIDEO_MAX_PLANES> bpl_out;
 static bool last_buffer = false;
 static codec_ctx *ctx;
 
@@ -78,7 +79,7 @@ struct request_fwht {
 	struct v4l2_ctrl_fwht_params params;
 };
 
-static request_fwht fwht_reqs[VIDEO_MAX_FRAME];
+static std::array<request_fwht, VIDEO_MAX_FRAME> fwht_reqs;
 
 #define TS_WINDOW 241
 #define FILE_HDR_ID			v4l2_fourcc('V', 'h', 'd', 'r')
@@ -98,8 +99,8 @@ private:
 	bool full;
 	double first;
 	double sum;
-	double ts[TS_WINDOW];
-	unsigned seq[TS_WINDOW];
+	std::array<double, TS_WINDOW> ts;
+	std::array<unsigned int, TS_WINDOW> seq;
 	unsigned dropped_buffers;
 	bool alternate_fields;
 	unsigned field_cnt;
@@ -503,7 +504,7 @@ static void print_buffer(FILE *f, struct v4l2_buffer &buf)
 		static_cast<__u64>(buf.timestamp.tv_sec), static_cast<__u64>(buf.timestamp.tv_usec),
 		timestamp_type2s(buf.flags).c_str(), timestamp_src2s(buf.flags).c_str());
 	if (buf.flags & V4L2_BUF_FLAG_TIMECODE) {
-		static constexpr int fps_types[] = { 0, 24, 25, 30, 50, 60 };
+		static constexpr std::array<int, 6> fps_types{ 0, 24, 25, 30, 50, 60 };
 		int fps = buf.timecode.type;
 
 		if (fps > 5)
@@ -1307,8 +1308,8 @@ static void write_buffer_to_file(cv4l_fd &fd, cv4l_queue &q, cv4l_buffer &buf,
 				 cv4l_fmt &fmt, FILE *fout)
 {
 #ifndef NO_STREAM_TO
-	unsigned comp_size[VIDEO_MAX_PLANES];
-	__u8 *comp_ptr[VIDEO_MAX_PLANES];
+	std::array<unsigned int, VIDEO_MAX_PLANES> comp_size;
+	std::array<__u8 *, VIDEO_MAX_PLANES> comp_ptr;
 
 	if (host_fd_to >= 0) {
 		unsigned tot_comp_size = 0;
@@ -2226,9 +2227,9 @@ static void stateful_m2m(cv4l_fd &fd, cv4l_queue &in, cv4l_queue &out,
 			 const cv4l_fmt &fmt_out, cv4l_fd *exp_fd_p)
 {
 	int fd_flags = fcntl(fd.g_fd(), F_GETFL);
-	fps_timestamps fps_ts[2];
-	unsigned count[2] = { 0, 0 };
-	fd_set fds[3];
+	std::array<fps_timestamps, 2> fps_ts;
+	std::array<unsigned int, 2> count{};
+	std::array<fd_set, 3> fds;
 	fd_set *rd_fds = &fds[0]; /* for capture */
 	fd_set *ex_fds = &fds[1]; /* for capture */
 	fd_set *wr_fds = &fds[2]; /* for output */
@@ -2425,8 +2426,8 @@ static void stateless_m2m(cv4l_fd &fd, cv4l_queue &in, cv4l_queue &out,
 			  FILE *fin, FILE *fout, cv4l_fmt &fmt_in,
 			  const cv4l_fmt &fmt_out, cv4l_fd *exp_fd_p)
 {
-	fps_timestamps fps_ts[2];
-	unsigned count[2] = { 0, 0 };
+	std::array<fps_timestamps, 2> fps_ts;
+	std::array<unsigned int, 2> count{};
 	int fd_flags = fcntl(fd.g_fd(), F_GETFL);
 	bool stopped = false;
 
@@ -2580,8 +2581,8 @@ static void streaming_set_m2m(cv4l_fd &fd, cv4l_fd &exp_fd)
 	cv4l_queue out(v4l_type_invert(fd.g_type()), out_memory);
 	cv4l_queue exp_q(exp_fd.g_type(), V4L2_MEMORY_MMAP);
 	cv4l_fd *exp_fd_p = nullptr;
-	FILE *file[2] = {nullptr, nullptr};
-	cv4l_fmt fmt[2];
+	std::array<FILE *, 2> file{};
+	std::array<cv4l_fmt, 2> fmt;
 
 	fd.g_fmt(fmt[OUT], out.g_type());
 	fd.g_fmt(fmt[CAP], in.g_type());
@@ -2639,12 +2640,12 @@ static void streaming_set_cap2out(cv4l_fd &fd, cv4l_fd &out_fd)
 	__u32 out_type = out_fd.has_vid_m2m() ? v4l_type_invert(out_fd.g_type()) : out_fd.g_type();
 	cv4l_queue in(fd.g_type(), memory);
 	cv4l_queue out(out_type, out_memory);
-	fps_timestamps fps_ts[2];
-	unsigned count[2] = { 0, 0 };
-	FILE *file[2] = {nullptr, nullptr};
+	std::array<fps_timestamps, 2> fps_ts;
+	std::array<unsigned int, 2> count{};
+	std::array<FILE *, 2> file{};
 	fd_set fds;
 	unsigned cnt = 0;
-	cv4l_fmt fmt[2];
+	std::array<cv4l_fmt, 2> fmt;
 
 	fd.g_fmt(fmt[OUT], out.g_type());
 	fd.g_fmt(fmt[CAP], in.g_type());

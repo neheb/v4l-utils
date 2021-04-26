@@ -59,29 +59,29 @@ struct color {
 	double r, g, b, a;
 };
 
-static constexpr double bt601[3][3] = {
-	{ 1, 0,       1.4020  },
-	{ 1, -0.3441, -0.7141 },
-	{ 1, 1.7720,  0       },
+using clr = std::array<double, 3>;
+static constexpr std::array<clr, 3> bt601{
+	clr{ 1, 0, 1.4020 },
+	clr{ 1, -0.3441, -0.7141 },
+	clr{ 1, 1.7720, 0 },
 };
-static constexpr double rec709[3][3] = {
-	{ 1, 0,       1.5748  },
-	{ 1, -0.1873, -0.4681 },
-	{ 1, 1.8556,  0       },
+static constexpr std::array<clr, 3> rec709{
+	clr{ 1, 0, 1.5748 },
+	clr{ 1, -0.1873, -0.4681 },
+	clr{ 1, 1.8556, 0 },
 };
-static constexpr double smpte240m[3][3] = {
-	{ 1, 0,       1.5756  },
-	{ 1, -0.2253, -0.4767 },
-	{ 1, 1.8270,  0       },
+static constexpr std::array<clr, 3> smpte240m{
+	clr{ 1, 0, 1.5756 },
+	clr{ 1, -0.2253, -0.4767 },
+	clr{ 1, 1.8270, 0 },
 };
-static constexpr double bt2020[3][3] = {
-	{ 1, 0,       1.4746  },
-	{ 1, -0.1646, -0.5714 },
-	{ 1, 1.8814,  0       },
+static constexpr std::array<clr, 3> bt2020{
+	clr{ 1, 0, 1.4746 },
+	clr{ 1, -0.1646, -0.5714 },
+	clr{ 1, 1.8814, 0 },
 };
 
-static void ycbcr2rgb(const double m[3][3], double y, double cb, double cr,
-			color &c)
+static void ycbcr2rgb(std::array<clr, 3> m, double y, double cb, double cr, color &c)
 {
 	c.r = m[0][0] * y + m[0][1] * cb + m[0][2] * cr;
 	c.g = m[1][0] * y + m[1][1] * cb + m[1][2] * cr;
@@ -536,7 +536,7 @@ static int testColorsFmt(struct node *node, unsigned component,
 
 	unsigned h = fmt.g_height();
 	unsigned w = fmt.g_width();
-	unsigned color_cnt[3] = { 0, 0, 0 };
+	std::array<unsigned int, 3> color_cnt{};
 	v4l2_std_id std;
 	bool is_50hz = false;
 	unsigned total;
